@@ -5,18 +5,24 @@ import socket
 import threading,Queue
 
 
-root_cmd = r''' pwd  '''
-node = 'd3.txt'
+node = 'all.txt'
 
-upload_file = '/etc/passwd'
-user_cmd = r'''  df -h  '''
+root_cmd = r'''
+sed -i 's/PermitRootLogin no/PermitRootLogin yes/'  /etc/ssh/sshd_config 
+/etc/init.d/sshd restart
+echo hehe
+'''
+
+
+user_cmd = r'''  cat /etc/issue   '''
 issu = 0
+#upload_file = '/etc/passwd'
 
-login_user = 'xiaoming'
-key_file = 'id_rsa'
+login_user = 'lin'
+key_file = '/root/.ssh/id_rsa'
 sshport = 22
 time_out = 20
-Numer_Thread = 20
+Numer_Thread = 70
 
 
 q = Queue.Queue()
@@ -119,5 +125,4 @@ for i in fn:
 		q.put(q_args)
 fn.close()
 q.join()
-
 
