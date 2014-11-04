@@ -2,7 +2,6 @@
 from Crypto.Cipher import AES
 import base64
 
-
 block_size = 16
 #secret = os.urandom(block_size)
 secret = '\xfb8\xf6\x02\xe0\xe2P\x03\xc2\x14\xa4v\r\x10\x1dR'
