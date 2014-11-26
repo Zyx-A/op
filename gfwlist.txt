@@ -1,5 +1,10 @@
 var domains = {
   "wp.com": 1,
+  "linkedin.com": 1,
+  "google-analytics.com": 1,
+  "googletagmanager.com.com": 1,
+  "adroll.com": 1,
+  "adnxs.com": 1,
   "ssl-images-amazon.com": 1,
   "amazon-adsystem.com": 1,
   "co.jp": 1,
