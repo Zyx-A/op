@@ -5,6 +5,7 @@
 	"highlight_line": true,
 	"remember_open_files": false,
 	"hot_exit": false,
-	"default_line_ending": "unix"
+	"default_line_ending": "unix",
+	"highlight_modified_tabs": true
 }
 
