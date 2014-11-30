@@ -1,0 +1,10 @@
+{
+	"font_size": 14,
+	"word_wrap": true,
+	"close_windows_when_empty": true,
+	"highlight_line": true,
+	"remember_open_files": false,
+	"hot_exit": false,
+	"default_line_ending": "unix"
+}
+
