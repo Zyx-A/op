@@ -1,8 +1,11 @@
 var domains = {
   "wp.com": 1,
+  "greatfire.org": 1,
+  "any.do": 1,
+  "goo.gl": 1,
+  "namecheap.com": 1,
   "yyets.com": 1,
   "core-os.net": 1,
-  "rrys123.comcom": 1,
   "linkedin.com": 1,
   "google-analytics.com": 1,
   "googletagmanager.com.com": 1,
