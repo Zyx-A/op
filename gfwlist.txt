@@ -1,10 +1,15 @@
 var domains = {
   "wp.com": 1,
+  "stackoverflow.com": 1,
   "greatfire.org": 1,
+  "haproxy.org": 1,
+  "wooyun.org": 1,
   "any.do": 1,
   "goo.gl": 1,
+  "vine.co": 1,
   "namecheap.com": 1,
   "yyets.com": 1,
+  "snappyty.com": 1,
   "core-os.net": 1,
   "linkedin.com": 1,
   "google-analytics.com": 1,
@@ -1952,7 +1957,7 @@ var domains = {
 };
 
 var proxy = "SOCKS5 127.0.0.1:1080; SOCKS 127.0.0.1:1080; DIRECT;";
-var direct = 'DIRECT;';
+var direct = "DIRECT;";
 
 function FindProxyForURL(url, host) {
     var lastPos;
@@ -1962,6 +1967,10 @@ function FindProxyForURL(url, host) {
         }
         lastPos = host.indexOf('.') + 1;
         host = host.slice(lastPos);
-    } while (lastPos >= 1);
-    return direct;
+    }
+    while (lastPos >= 1);
+    if ((-1 != host.lastIndexOf('cn')) || (-1 != host.lastIndexOf('com'))) {
+        return direct;
+    }
+    return proxy;
 }
