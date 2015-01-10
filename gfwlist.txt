@@ -1,5 +1,6 @@
 var domains = {
   "wp.com": 1,
+  "ytvpn.com": 1,
   "stackoverflow.com": 1,
   "namecheap.com": 1,
   "yyets.com": 1,
@@ -1163,7 +1164,7 @@ function FindProxyForURL(url, host) {
     }
     while (lastPos >= 1);
     //Designed by Dxf
-    if ((-1 != host.lastIndexOf('cn')) || (-1 != host.lastIndexOf('com'))) {
+    if ((-1 != host.lastIndexOf('cn')) || (-1 != host.lastIndexOf('com')) || (-1 != host.search("[0-9]"))) {
         return direct;
     }
     return proxy;
