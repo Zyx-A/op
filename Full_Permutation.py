@@ -10,8 +10,8 @@ def tq(ls):
 		box.append(0)
 	def enum(step):
 		if step == len(ls)+1:
-				print(box)
-				return
+			print(box)
+			return
 		for i in range(len(ls)):
 			if book[i] == 1:
 				box[step-1] = ls[i]
