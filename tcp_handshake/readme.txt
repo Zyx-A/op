@@ -1,4 +1,4 @@
-Client                                                      Server
+Client                                                         Server
 =============================================================================
                                                                LISTEN
             > flags=SYN seq=<random1> length=0
