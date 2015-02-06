@@ -1,14 +1,15 @@
 #!/bin/bash
 
-downdir="/opt/SP"
 installdir="/opt/nginx"
 
-mkdir $downdir
-cd $downdir
+
+yum install -y -q pcre-devel openssl-devel gcc make
+
+cd /tmp
 wget -q  http://nginx.org/download/nginx-1.4.7.tar.gz
 tar zxf nginx-1.4.7.tar.gz
+
 cd nginx-1.4.7
-yum install -y -q pcre-devel openssl-devel gcc make
 
 ./configure \
 --prefix=$installdir \
