@@ -75,7 +75,7 @@ def get_meta(remote_path):
 			print(json.dumps(jsmeta,indent=4))
 		if jsmeta['is_dir']:
 			print(color('Path: %s'%jsmeta['path'],clr='yellow'))
-			space = '\t'
+			space = '\t\t'
 			for i in jsmeta['contents']:
 				cot = i['path'].split('/')[-1]
 				if i['is_dir']:
