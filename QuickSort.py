@@ -1,15 +1,16 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
+
 def qsort(arr):
 	if len(arr) <= 1:
 		return arr
 	else:
-		piovt = arr[0]
-		return qsort([x for x in arr[1:] if x <= piovt]) + \
-		[piovt] + \
-		qsort([x for x in arr[1:] if x > piovt])
+		pivot = arr[0]
+		return qsort([x for x in arr[1:] if x < pivot]) +\
+		[pivot] +\
+		qsort([x for x in arr[1:] if x > pivot])
 
 
 
-
-a = [0,3,34,-5,23,2,3]
-print qsort(a)
+a = [32,7,9,0,3,34,-5,23,2,3]
+print(a)
+print(qsort(a))
