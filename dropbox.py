@@ -1,16 +1,24 @@
-#!/usr/bin/python
-#coding:utf-8
+#!/usr/bin/env python3
 import sys
-import urllib2
-import urllib
+import os
 import json
-from commands import getstatusoutput
+import urllib.request
+import argparse
 
-access_token = 'T4DDxgprfYsAAAAAAAAAASPZ234234W_Hv3hst43VZYwW32mvuTsnTdsXr23r23gE'
 
-url_md = 'https://api.dropbox.com/1/metadata/'
-url_file = 'https://api-content.dropbox.com/1/files/'
+url_metadata = 'https://api.dropbox.com/1/metadata/auto/'
+url_file_get = 'https://api-content.dropbox.com/1/files/auto/'
+url_file_put = 'https://api-content.dropbox.com/1/files_put/auto/'
 
+def get_token():
+	envname = 'DropboxAccessToken'
+	get = os.getenv(envname)
+	if get:
+		global access_token
+		access_token = get
+	else:
+		print('NOT find %s, Run shell cmd "export %s=<Your Token>"'%(envname,envname))
+		exit(1)
 
 def color(str,clr=''):
 	if clr == 'yellow':
@@ -18,57 +26,88 @@ def color(str,clr=''):
 	else:
 		return '\033[36;1m' + str + '\033[0m'
 
-def up_file(file,path):
-	url = url_file + 'dropbox/' + path + '?access_token=' + access_token
-	a = getstatusoutput('curl -s -F file=@%s %s'% (file,url))
-	if a[0] == 0:
-		print color('Upload ok ..')
+def up_file(localfile,remote_path):
+	url = '%s%s/%s?access_token=%s&param=val'%(url_file_put,remote_path,os.path.basename(localfile),access_token)
+	#print(url)
+	DATA = open(localfile,'rb')
+	length = os.path.getsize(localfile)
+	req = urllib.request.Request(url,data=DATA.read(),method='PUT')
+	req.add_header('Content-Type','application/x-www-form-urlencoded;')
+	try:
+		res = urllib.request.urlopen(req)
+	except urllib.error.HTTPError as e:
+		print(e.code)
+		print(e.fp.read().decode('utf-8'))
 	else:
-		print a
+		pp = (json.loads(res.read().decode('utf-8')))
+		print(json.dumps(pp,indent=4))
 
-def down_file(path):
-	url = url_file + 'dropbox/' + path + '?access_token=' + access_token
-	urllib.urlretrieve(url,path.split('/')[-1])
-	print color('Download ok ..')
 
-def get_meta(path=''):
-	url = url_md + 'dropbox/' + path + '?access_token=' + access_token
-	a = urllib.urlopen(url).read()
-	a = json.loads(a)
-	if 'error' in a.keys():
-		print 'Error !  ',a['error']
-		return
-	if not a['is_dir']:
-		print color('%s \tis a file. \t\tsize %s'%(a['path'],a['size']),clr='yellow')
-		return
-	if a['is_dir']:
-		print color('Path: %s'%a['path'],clr='yellow')
-		space = '    '
-		for i in a['contents']:
-			cot = i['path'].split('/')[-1]
-			if i['is_dir']:
-				print color(cot) + space,
-			else:
-				print cot + space,
-		print '\n'
-		return
-	print '%s\nSomething ERROR'%str(a)
+def down_file(remote_path):
+	url = '%s%s?access_token=%s'%(url_file_get,remote_path,access_token)
+	localfile = os.path.basename(remote_path)
+#	print(url)
+	if os.path.exists(localfile):
+		print('%s already exist'%localfile)
+		exit(1)
+	try:
+		filename,headers = urllib.request.urlretrieve(url,localfile)
+	except urllib.error.HTTPError as e:
+		print(e.code)
+		print(e.fp.read().decode('utf-8'))
+	else:
+		#for i,j in headers.items():
+		#	print(i,j)
+		pp = json.loads(headers['x-dropbox-metadata'])
+		print(json.dumps(pp,indent=4))
 
+def get_meta(remote_path):
+	url = '%s%s?access_token=%s'%(url_metadata,remote_path,access_token)
+	#print(url)
+	try:
+		res = urllib.request.urlopen(url)
+	except urllib.error.HTTPError as e:
+		print(e.code)
+		print(e.fp.read().decode('utf-8'))
+	else:
+		jsmeta = json.loads(res.read().decode('utf-8'))
+		if not jsmeta['is_dir']:
+			print(json.dumps(jsmeta,indent=4))
+		if jsmeta['is_dir']:
+			print(color('Path: %s'%jsmeta['path'],clr='yellow'))
+			space = '\t'
+			for i in jsmeta['contents']:
+				cot = i['path'].split('/')[-1]
+				if i['is_dir']:
+					print(color(cot) + space,end='')
+				else:
+					print(cot + space,end='')
+			print()
+
+def optparse():
+	parser = argparse.ArgumentParser()
+	parser.add_argument('-d','--download')
+	parser.add_argument('-l','--list',nargs='?',const='/')
+	parser.add_argument('-u','--upload',nargs=2,help='--upload <local_file> <remote_path>')
+	args = parser.parse_args()
+	if len(sys.argv) == 1:
+		parser.parse_args(['--help'])
+	else:
+		return args
 
 def main():
-	opt = ['-l','-d','-u']
-	if not sys.argv[1] in opt:
-		print 'Error sys.argv[1] like %s'%str(opt)
+	get_token()
+	argvs = optparse()
+	#print(argvs)
+	if argvs.download:
+		down_file(argvs.download)
 		return
-	if sys.argv[1] == '-l':
-		if len(sys.argv) == 2:	ar2 = ''
-		else:	ar2 = sys.argv[2]
-		get_meta(ar2)
-	if sys.argv[1] == '-d':
-		down_file(sys.argv[2])
-	if sys.argv[1] == '-u':
-		up_file(sys.argv[2],sys.argv[3])
+	if argvs.upload:
+		up_file(argvs.upload[0],argvs.upload[1])
+		return
+	if argvs.list:
+		get_meta(argvs.list)
+		return
 
 if __name__ == '__main__':
 	main()
-
