@@ -33,7 +33,7 @@ def up_chunk(localfile,remote_path):
 	DATA = open(localfile,'rb')
 	url2 = None
 	while 1:
-		cDATA = DATA.read(104857600)  # 1024 * 1024 * 100 = 100MB
+		cDATA = DATA.read(54857600)  # 1024 * 1024 * 100 = 100MB
 		if not cDATA: break
 		if url2:
 			url = url2
