@@ -1,11 +1,12 @@
 {
-	"font_size": 14,
-	"word_wrap": true,
 	"close_windows_when_empty": true,
-	"highlight_line": true,
-	"remember_open_files": false,
-	"hot_exit": false,
 	"default_line_ending": "unix",
-	"highlight_modified_tabs": true
+	"font_size": 14,
+	"highlight_line": true,
+	"highlight_modified_tabs": true,
+	"hot_exit": false,
+	"remember_open_files": false,
+	"word_wrap": true,
+	"trim_trailing_white_space_on_save": true
 }
 
