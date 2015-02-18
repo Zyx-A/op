@@ -6,7 +6,7 @@ durl=https://www.python.org/ftp/python/$version/Python-$version.tgz
 
 
 
-yum install -y -q readline-devel gcc make
+yum install -y -q readline-devel gcc make wget
 
 cd /tmp
 wget -q $durl
