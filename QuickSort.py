@@ -10,6 +10,7 @@ def qsort(arr):
 		qsort([x for x in arr[1:] if x > pivot])
 
 
+
 a = [32,7,9,0,3,34,-5,23,2,3]
 print(a)
 print(qsort(a))
