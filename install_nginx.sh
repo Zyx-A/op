@@ -1,15 +1,15 @@
 #!/bin/bash
 
 installdir="/opt/nginx"
-
+version=1.6.3
 
 yum install -y -q pcre-devel openssl-devel gcc make
 
 cd /tmp
-wget -q  http://nginx.org/download/nginx-1.4.7.tar.gz
-tar zxf nginx-1.4.7.tar.gz
+wget -q  http://nginx.org/download/nginx-$version.tar.gz
+tar zxf nginx-$version.tar.gz
 
-cd nginx-1.4.7
+cd nginx-$version
 
 ./configure \
 --prefix=$installdir \
