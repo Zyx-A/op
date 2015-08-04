@@ -1,7 +1,7 @@
 #!/bin/bash
 
-version="3.4.2"
-installdir="/opt/python34"
+version="3.4.3"
+installdir="/opt/python3"
 durl=https://www.python.org/ftp/python/$version/Python-$version.tgz
 
 yum install -y -q readline-devel gcc make wget openssl-devel
