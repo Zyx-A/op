@@ -1,4 +1,4 @@
-[willghost_base_ubuntu]
+[ubuntu]
 text=ffffff
 cyan(bold)=34e2e2
 text(bold)=ffffff
@@ -10,7 +10,7 @@ cyan=0aced3
 red(bold)=ff7979
 yellow=f9cd00
 magenta(bold)=ad7fa8
-yellow(bold)=fce94f
+yellow(bold)=fbe41c
 red=ffc58a
 white=d3d7cf
 blue(bold)=9ebdde
@@ -21,3 +21,4 @@ black(bold)=555753
 [Names]
 name0=ubuntu
 count=1
+
