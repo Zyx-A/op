@@ -2,7 +2,7 @@
 
 port=3306
 masterdir="/opt/mysql"
-downversion="mysql-5.6.21"
+downversion="mysql-5.6.26"
 
 installdir="$masterdir"
 #installdir="${masterdir}_$port"
