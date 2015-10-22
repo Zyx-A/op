@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version="3.4.3"
+version="3.5.0"
 installdir="/opt/python3"
 durl=https://www.python.org/ftp/python/$version/Python-$version.tgz
 
