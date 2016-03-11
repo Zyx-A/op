@@ -10,13 +10,13 @@ def encrypt_RSA(message):
     encrypted = rsa.public_encrypt(message, RSA.pkcs1_padding)
     return encrypted.encode('base64').strip()
 
-#def decrypt_RSA(package):
-#    with open(RSA_PRI_FILE) as f:
-#        key = f.read()
-#    priv_key = BIO.MemoryBuffer(key.encode('utf-8'))
-#    key = RSA.load_key_bio(priv_key)
-#    decrypted = key.private_decrypt(b64decode(package), RSA.pkcs1_padding)
-#    return decrypted
+def decrypt_RSA(package):
+    with open(RSA_PRI_FILE) as f:
+        key = f.read()
+    priv_key = BIO.MemoryBuffer(key.encode('utf-8'))
+    key = RSA.load_key_bio(priv_key)
+    decrypted = key.private_decrypt(b64decode(package), RSA.pkcs1_padding)
+    return decrypted
 
 def make_rsa_sum(text):
     m = EVP.MessageDigest("sha1")
