@@ -13,7 +13,7 @@ MYSQL_DBN = 'thergata'
 DRIVE_PRE = 'mysql+mysqldb'
 #DRIVE_PRE = 'mysql+mysqlconnector'
 
-engine = create_engine('%s://%s:%s@%s/%s'%(DRIVE_PRE, MYSQL_USER, MYSQL_PWD, MYSQL_HOST, MYSQL_DBN), encoding='utf8', echo=0,)
+engine = create_engine('%s://%s:%s@%s/%s'%(DRIVE_PRE, MYSQL_USER, MYSQL_PWD, MYSQL_HOST, MYSQL_DBN), encoding='utf8', connect_args={'charset':'utf8'}, echo=0,)
 
 conn = engine.connect()
 
