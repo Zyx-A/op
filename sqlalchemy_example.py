@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #conding:utf-8
 
-from sqlalchemy import create_engine, Table, MetaData
+from sqlalchemy import create_engine, Table, MetaData, desc
 from sqlalchemy.sql import select, and_, or_, not_
 
 
@@ -45,6 +45,10 @@ def offset():
             print _.id, _.order_id
         offs += STE
         time.sleep(1)
+
+
+#s = select([spd]).order_by(desc(spd.c.id)).limit(1)
+#exe = conn.execute(s)
 
 
 if __name__ == '__main__':
