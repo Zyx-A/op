@@ -34,17 +34,23 @@ def flush_old():
 
 
 def offset():
-    import time
     offs = 0
-    STE = 3
+    STE = 200
+
+    st = datetime.datetime(2016, 6,1)
+    et = datetime.datetime(2016, 6,2)
     while 1:
-        s = select([tlod]).where( tlod.c.id >= 1490015 ).limit(STE).offset(offs)
-        result = conn.execute(s)
-        print result.rowcount
-        for _ in result:
-            print _.id, _.order_id
+        s = select([sbl]).where( and_(sbl.c.time_created >= st, sbl.c.time_created < et))  \
+            .limit(STE).offset(offs)
+        rows = conn.execute(s)
+        if rows.rowcount == 0:
+            break
         offs += STE
-        time.sleep(1)
+
+        for _ in rows:
+            print _
+
+
 
 
 #s = select([spd]).order_by(desc(spd.c.id)).limit(1)
