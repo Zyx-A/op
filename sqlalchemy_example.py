@@ -16,10 +16,10 @@ DRIVE_PRE = 'mysql+mysqldb'
 engine = create_engine('%s://%s:%s@%s/%s'%(DRIVE_PRE, MYSQL_USER, MYSQL_PWD, MYSQL_HOST, MYSQL_DBN), encoding='utf8', connect_args={'charset':'utf8'}, echo=0,)
 
 conn = engine.connect()
+metadata=MetaData()
 
 
-
-tlod = Table('your_table_name', MetaData(), autoload=True, autoload_with=engine)
+tlod = Table('your_table_name', metadata, autoload=True, autoload_with=engine)
 
 
 def flush_old():
@@ -42,6 +42,7 @@ def offset():
     while 1:
         s = select([sbl]).where( and_(sbl.c.time_created >= st, sbl.c.time_created < et))  \
             .limit(STE).offset(offs)
+        #s = select([spd]).order_by(desc(spd.c.id)).limit(1)
         rows = conn.execute(s)
         if rows.rowcount == 0:
             break
@@ -50,11 +51,12 @@ def offset():
         for _ in rows:
             print _
 
+def show_tables():
+    metadata.reflect(engine)
+    print metadata.tables.keys()
 
 
 
-#s = select([spd]).order_by(desc(spd.c.id)).limit(1)
-#exe = conn.execute(s)
 
 
 if __name__ == '__main__':
