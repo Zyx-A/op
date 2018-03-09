@@ -2,18 +2,18 @@
 #conding:utf-8
 
 from sqlalchemy import create_engine, Table, MetaData, desc
-from sqlalchemy.sql import select, and_, or_, not_
+from sqlalchemy.sql import select, and_, or_, not_, text
 
 
-MYSQL_HOST = '192.168.1.253'
-MYSQL_USER = 'hwef'
-MYSQL_PWD = 'hwewef'
-MYSQL_DBN = 'thergata'
+MYSQL_HOST = '127.0.0.1'
+MYSQL_USER = 'root'
+MYSQL_PWD = 'wefwef'
+MYSQL_DBN = 'hergerg'
 
 DRIVE_PRE = 'mysql+mysqldb'
 #DRIVE_PRE = 'mysql+mysqlconnector'
 
-engine = create_engine('%s://%s:%s@%s/%s'%(DRIVE_PRE, MYSQL_USER, MYSQL_PWD, MYSQL_HOST, MYSQL_DBN), encoding='utf8', connect_args={'charset':'utf8'}, echo=0,)
+engine = create_engine('%s://%s:%s@%s/%s'%(DRIVE_PRE, MYSQL_USER, MYSQL_PWD, MYSQL_HOST, MYSQL_DBN), encoding='utf8', connect_args={'charset':'utf8'}, echo=1,)
 
 conn = engine.connect()
 metadata=MetaData()
@@ -51,6 +51,15 @@ def offset():
         for _ in rows:
             print _
 
+
+def nbtext():
+    sql = text('''select * from your_table_name where name = :x ''')
+    rows = conn.execute(sql, x='6wef')
+    for row in rows:
+        print row
+
+
+
 def show_tables():
     metadata.reflect(engine)
     print metadata.tables.keys()
@@ -62,5 +71,6 @@ def show_tables():
 if __name__ == '__main__':
     pass
     #offset()
+    nbtext()
 
 
